@@ -2,6 +2,9 @@ import React, { useContext, useState,useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { handleLogout } from "../../HelperFunctions/helperFunctions";
 import { AuthContext } from "../store/authProvider";
+import BlogTemplate from "./blogtemplate";
+import DashboardHeader from "./header";
+import Userblog from "./userblogs";
 
 function Dashboard() {
 
@@ -10,19 +13,20 @@ function Dashboard() {
   const user=useContext(AuthContext);
 
   useEffect(() => {
-    if (user) {
-      setRedirect("/dashboard");
+    if (!user) {
+      setRedirect("/");
     }
   }, [user]);
 
-  if (user) {
+  if (redirect) {
     return <Redirect to={redirect} />;
   }
 
   return (
     <div>
-      <h1>Welcome to dashboard</h1>
-      <button type="submit" onClick={handleLogout}>Logout</button>
+      <DashboardHeader/>
+      <BlogTemplate/>
+      <Userblog/>
     </div>
   );
 }

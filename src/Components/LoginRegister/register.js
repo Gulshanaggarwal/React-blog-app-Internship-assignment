@@ -17,8 +17,8 @@ function Register() {
     }
   }, [user]);
 
-  if (user) {
-    return <Redirect to={redirect} />;
+  if (redirect) {
+    return <Redirect to={redirect} />
   }
 
   return (

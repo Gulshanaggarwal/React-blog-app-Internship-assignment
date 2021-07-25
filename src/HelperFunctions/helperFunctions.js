@@ -1,10 +1,26 @@
 import { auth } from "../Components/Firebase/config";
+import {BrowserRouter as Router, Switch,Route} from 'react-router-dom';
+
+function updateProfile(name){
+    const user=auth.currentUser;
+
+    user.updateProfile({
+        displayName:name
+    })
+}
+
 
 function handleSignUp(event,name,email,password){
     event.preventDefault();
 
     auth.createUserWithEmailAndPassword(email,password)
-    .then(()=>alert("Regsitered successfully"))
+    .then(()=>{
+        alert("Regsitered successfully");
+
+        // update profile function call
+        updateProfile(name);
+        
+    })
     .catch((err)=>alert(err))
 
 }

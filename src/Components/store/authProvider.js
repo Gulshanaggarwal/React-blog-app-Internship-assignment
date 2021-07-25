@@ -1,12 +1,13 @@
-import React, { Children, createContext, useState } from "react";
+import React, {createContext, useState } from "react";
 import { auth } from "../Firebase/config";
 
 export const AuthContext = createContext();
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
+  console.log(user);
 
-  auth.onAuthStateChanged(() => {
+  auth.onAuthStateChanged((user) => {
     setUser(user);
   });
 

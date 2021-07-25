@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
+import { Redirect } from "react-router-dom";
 import { handleLogin } from "../../HelperFunctions/helperFunctions";
+import { AuthContext } from "../store/authProvider";
 
 function Login() {
   const [email, setEmail] = useState(""); //  user email
   const [password, setPassword] = useState(""); // user password
+  const [redirect, setRedirect] = useState(null);
+
+  const user=useContext(AuthContext);
+
+  useEffect(() => {
+    if (user) {
+      setRedirect("/dashboard");
+    }
+  }, [user]);
+
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
 
   return (
     <div className="bg-gray-100 h-screen flex justify-center items-center">
