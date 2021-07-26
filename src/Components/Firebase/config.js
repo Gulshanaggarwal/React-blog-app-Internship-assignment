@@ -13,7 +13,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const projectFirestore = firebase.firestore();
+const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-export {auth,projectFirestore};
+export {auth,firestore};
