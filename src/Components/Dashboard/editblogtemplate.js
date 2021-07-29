@@ -5,7 +5,7 @@ function EditBlog({ currentBlog,setEditing }) {
   const [title, setTitle] = useState(currentBlog.title);
   const [description, setDescription] = useState(currentBlog.description);
 
-  // handle update
+  // handle update function
 
   function handleUpdate(event, id) {
     event.preventDefault();
