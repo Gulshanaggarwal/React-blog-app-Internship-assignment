@@ -5,7 +5,6 @@ export const AuthContext = createContext();
 
 const AuthProvider = (props) => {
   const [user, setUser] = useState(null);
-  console.log(user);
 
   auth.onAuthStateChanged((user) => {
     setUser(user);

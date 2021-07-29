@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { handleLogout } from "../../HelperFunctions/helperFunctions";
-import { AuthContext } from "../store/authProvider";
+import { AuthContext } from "../../store/authProvider";
 
 function DashboardHeader() {
-  const user = useContext(AuthContext);
+  const user = useContext(AuthContext);  // fetch user
   const { displayName } = user !== null ? user : "";
 
   return (

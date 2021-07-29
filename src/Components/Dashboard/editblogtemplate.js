@@ -1,12 +1,16 @@
-import React, { useContext, useState } from "react";
-import { firestore } from "../Firebase/config";
+import React, { useState } from "react";
+import { firestore } from "../../Firebase/config";
 
 function EditBlog({ currentBlog,setEditing }) {
   const [title, setTitle] = useState(currentBlog.title);
   const [description, setDescription] = useState(currentBlog.description);
 
+  // handle update
+
   function handleUpdate(event, id) {
     event.preventDefault();
+
+    // firestore data update
     firestore
       .collection("blogs")
       .doc(id)

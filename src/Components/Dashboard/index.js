@@ -1,23 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { handleLogout } from "../../HelperFunctions/helperFunctions";
-import { AuthContext } from "../store/authProvider";
+import { AuthContext } from "../../store/authProvider";
 import BlogTemplate from "./blogtemplate";
 import DashboardHeader from "./header";
 import Userblog from "./userblogs";
-import { firestore } from "../Firebase/config";
 import EditBlog from "./editblogtemplate";
 
 
 function Dashboard() {
-  const user = useContext(AuthContext);
+  const user = useContext(AuthContext);   // fetch user
   const [redirect, setRedirect] = useState(null);
 
-  const [title,setTitle]=useState("");
-  const [description,setDescription]=useState("");
-  const [blog,setBlog]=useState([]);
-  const [isEditing,setEditing]=useState(false);
-  const [currentBlog,setCurrentBlog]=useState(null);
+  const [isEditing,setEditing]=useState(false);  // set edit mode
+  const [currentBlog,setCurrentBlog]=useState(null);  // set current Blog
+
+
+  // handle Edit function
 
 
   function handleEdit(event,ele){
@@ -43,7 +41,7 @@ function Dashboard() {
   return (
     <div>
       <DashboardHeader />
-      {isEditing ===false ? <BlogTemplate title={title} description={description} setTitle={setTitle} setDescription={setDescription} setBlog={setBlog}/> :<EditBlog currentBlog={currentBlog} setEditing={setEditing}/>}
+      {isEditing ===false ? <BlogTemplate /> :<EditBlog currentBlog={currentBlog} setEditing={setEditing}/>}
       <Userblog handleEdit={handleEdit} setEditing={setEditing} />
     </div>
   );

@@ -1,11 +1,16 @@
-import React, { useContext, useState } from "react";
-import { firestore,timestamp } from "../Firebase/config";
-import { AuthContext } from "../store/authProvider";
+import React, {useContext,useState } from "react";
+import { firestore} from "../../Firebase/config";
+import { AuthContext } from "../../store/authProvider";
 
-function BlogTemplate({title,description, setTitle, setDescription ,setBlog}) {
+function BlogTemplate() {
+  const [title,setTitle]=useState("");  // title
+  const [description,setDescription]=useState("");  // description
 
-  const user=useContext(AuthContext);
+
+  const user=useContext(AuthContext);  // fetch user
   const {displayName}=user!==null ?user:"";
+
+  // create new blog function
 
   function handleCreateBlog(event){
     event.preventDefault();
@@ -16,14 +21,15 @@ function BlogTemplate({title,description, setTitle, setDescription ,setBlog}) {
       description
 
     }
+    // store data to firebase
+
+    
     firestore.collection('blogs').add(data)
     .then(()=>alert("added successfully"))
-    .catch((err)=>alert("couldn't store"))
+    .catch((err)=>alert("couldn't store"));
 
-    setBlog(data);
-
-
-
+    setTitle("");
+    setDescription("");
   }
   return (
     <div>

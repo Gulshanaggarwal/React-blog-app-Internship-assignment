@@ -1,14 +1,16 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { handleLogin } from "../../HelperFunctions/helperFunctions";
-import { AuthContext } from "../store/authProvider";
+import { AuthContext } from "../../store/authProvider";
 
 function Login() {
   const [email, setEmail] = useState(""); //  user email
   const [password, setPassword] = useState(""); // user password
   const [redirect, setRedirect] = useState(null);
 
-  const user=useContext(AuthContext);
+  const user = useContext(AuthContext); // fetch user
+
+  // routing logic
 
   useEffect(() => {
     if (user) {
@@ -45,7 +47,7 @@ function Login() {
           <button
             className="p-2 bg-blue-500 my-2 text-white hover:bg-blue-600"
             type="submit"
-            onClick={(event)=>handleLogin(event,email,password)}
+            onClick={(event) => handleLogin(event, email, password)}
           >
             Login
           </button>

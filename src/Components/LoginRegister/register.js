@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { handleSignUp } from "../../HelperFunctions/helperFunctions";
-import { AuthContext } from "../store/authProvider";
+import { AuthContext } from "../../store/authProvider";
 
 function Register() {
   const [name, setName] = useState(""); // setName
@@ -10,6 +10,9 @@ function Register() {
   const [redirect, setRedirect] = useState(null);
 
   const user = useContext(AuthContext); // access user state using context;
+
+
+  // routing logic
 
   useEffect(() => {
     if (user) {

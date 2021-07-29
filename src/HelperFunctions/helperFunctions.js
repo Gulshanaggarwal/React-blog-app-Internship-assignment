@@ -1,5 +1,4 @@
-import { auth } from "../Components/Firebase/config";
-import {BrowserRouter as Router, Switch,Route} from 'react-router-dom';
+import { auth } from "../Firebase/config";
 
 function updateProfile(name){
     const user=auth.currentUser;
