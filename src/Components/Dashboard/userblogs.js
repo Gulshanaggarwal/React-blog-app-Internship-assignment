@@ -1,21 +1,59 @@
-import React from 'react';
+import React, { useContext } from "react";
+import useFirestore from "../hooks/useFirestore";
+import { firestore } from "../Firebase/config";
+
+function Userblog({ handleEdit,setEditing }) {
+  const { docs } = useFirestore("blogs");
+  console.log(docs);
+  const data = new Date(null);
+
+  function handleDelete(event, id) {
+    event.preventDefault();
+    firestore
+      .collection("blogs")
+      .doc(id)
+      .delete()
+      .then(() => alert("Blog deleted successfully"))
+      .catch((err) => alert("blog deleting error"));
+
+      setEditing(false);
 
 
+  }
+  return (
+    <div className="m-4">
+      <h2 className="text-xl border-b-2 border-green-500">
+        Find your all blogs here!
+      </h2>
+      {docs.map((ele, index) => {
+        return (
+          <div className="my-4 w-2/3 border-2 border-gray-300" key={index}>
+            <h3 className="font-bold my-2 p-2">{ele.title}</h3>
+            <p className="font-normal my-4 p-2">{ele.description}</p>
+            <p>
+              Posted On:{" "}
+              {data.setSeconds(ele.createdAt.seconds) && data.toLocaleString()}
+            </p>
 
-function Userblog(){
-    return(
-        <div className="m-4">
-            <h2 className="text-xl border-b-2 border-green-500">Find your all blogs here!</h2>
-            <div className="my-4 w-2/3">
-                <h3 className="font-bold my-2 bg-gray-200 p-2">Blog title</h3>
-                <p className="font-normal my-4 p-2 border-2 border-gray-200">Blog Description</p>
-                <div>
-                    <button className="px-3 py-1 bg-yellow-500 text-white rounded-sm hover:bg-yellow-600">Edit</button>
-                    <button className="px-3 py-1 bg-red-500 text-white mx-4 rounded-sm hover:bg-red-600">Delete</button>
-                </div>
+            <div className="m-2">
+              <button
+                className="px-3 py-1 bg-yellow-500 text-white rounded-sm hover:bg-yellow-600"
+                onClick={(event) => handleEdit(event, ele)}
+              >
+                Edit
+              </button>
+              <button
+                className="px-3 py-1 bg-red-500 text-white mx-4 rounded-sm hover:bg-red-600"
+                onClick={(event) => handleDelete(event,ele.id)}
+              >
+                Delete
+              </button>
             </div>
-        </div>
-    )
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export default Userblog;

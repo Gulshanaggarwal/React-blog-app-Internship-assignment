@@ -6,58 +6,30 @@ import BlogTemplate from "./blogtemplate";
 import DashboardHeader from "./header";
 import Userblog from "./userblogs";
 import { firestore } from "../Firebase/config";
+import EditBlog from "./editblogtemplate";
+
 
 function Dashboard() {
-  const [blogs, setBlogs] = useState(() => {
-    const savedData = [];
-    firestore
-      .collection("blogs")
-      .where("userId", "==", "Atul Agarwal")
-      .get()
-      .then((querysnapshot) =>
-        querysnapshot.forEach((doc) => savedData.push(doc.data()))
-      )
-      .catch((err) => console.log(err));
-
-    if (savedData !== []) {
-      return savedData;
-    } else {
-      return [];
-    }
-  });
-
-  console.log(blogs);
-
+  const user = useContext(AuthContext);
   const [redirect, setRedirect] = useState(null);
 
-  const user = useContext(AuthContext);
-  const { displayName } = user !== null ? user : "";
+  const [title,setTitle]=useState("");
+  const [description,setDescription]=useState("");
+  const [blog,setBlog]=useState([]);
+  const [isEditing,setEditing]=useState(false);
+  const [currentBlog,setCurrentBlog]=useState(null);
 
-  function handleCreateNew(event, title, description) {
+
+  function handleEdit(event,ele){
     event.preventDefault();
+    setEditing(true);
+    setCurrentBlog(ele);
 
-    firestore
-      .collection("blogs")
-      .add({
-        userId: displayName,
-        id: new Date(),
-        title: title,
-        description: description,
-      })
-      .then((res) => alert("sucessfully added"))
-      .catch(() => alert("couldn't add"));
-
-    setBlogs([
-      ...blogs,
-      {
-        userId: displayName,
-        id: new Date(),
-        title: title,
-        description: description,
-      },
-    ]);
   }
 
+
+
+  // routing logic
   useEffect(() => {
     if (!user) {
       setRedirect("/");
@@ -71,8 +43,8 @@ function Dashboard() {
   return (
     <div>
       <DashboardHeader />
-      <BlogTemplate handleCreateNew={handleCreateNew} />
-      <Userblog />
+      {isEditing ===false ? <BlogTemplate title={title} description={description} setTitle={setTitle} setDescription={setDescription} setBlog={setBlog}/> :<EditBlog currentBlog={currentBlog} setEditing={setEditing}/>}
+      <Userblog handleEdit={handleEdit} setEditing={setEditing} />
     </div>
   );
 }

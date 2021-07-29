@@ -10,15 +10,15 @@ function App() {
   return (
     <AuthProvider>
       <div className="font-serif">
-        <Router>
-          <Switch>
-            <Route path="/" exact component={HomePage} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/dashboard" exact component={Dashboard}/>
-          </Switch>
-        </Router>
-      </div>
+          <Router>
+            <Switch>
+              <Route path="/" exact component={HomePage} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/dashboard" exact component={Dashboard} />
+            </Switch>
+          </Router>
+        </div>
     </AuthProvider>
   );
 }
